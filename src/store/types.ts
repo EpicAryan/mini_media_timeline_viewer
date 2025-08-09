@@ -27,4 +27,5 @@ export interface TimelineState {
   totalDuration: number
   showGrid: boolean
   playheadPosition: number
+  showUntrimmed?: boolean
 }

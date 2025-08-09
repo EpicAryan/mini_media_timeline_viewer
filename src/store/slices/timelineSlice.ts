@@ -38,6 +38,9 @@ const timelineSlice = createSlice({
     zoomOut: (state) => {
       state.scale = Math.max(10, state.scale / 1.5)
     },
+    toggleShowUntrimmed: (state) => {
+      state.showUntrimmed = !state.showUntrimmed
+    },
   },
 })
 
