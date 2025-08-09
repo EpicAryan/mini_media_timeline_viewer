@@ -1,5 +1,7 @@
 # Mini Media Timeline Viewer
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge)](https://mini-media-viewer.dotaryan.com/)
+
 A professional-grade media timeline viewer built with React, Redux Toolkit, and Tailwind CSS. This application provides comprehensive video editing capabilities with timeline management, media trimming, and export functionality.
 
 ---
