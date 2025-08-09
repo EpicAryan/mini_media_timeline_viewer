@@ -35,7 +35,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       )}>
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-primary">
+          <div className="flex items-center justify-between p-3 px-6 border-b border-primary">
             <h2 className="text-xl font-semibold text-primary">{title}</h2>
             <Button
               variant="ghost"

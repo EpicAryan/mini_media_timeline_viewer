@@ -13,7 +13,7 @@ export const MainLayout = () => {
       <Header />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-row overflow-hidden">
           <div className="w-80 bg-panel border-r border-primary overflow-y-hidden px-1">
             <MediaUploader />
           </div>
