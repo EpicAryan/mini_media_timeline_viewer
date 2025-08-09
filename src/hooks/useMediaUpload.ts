@@ -5,11 +5,13 @@ import { getFileType, getMediaDuration, generateThumbnail } from '@/utils/mediaU
 import { FILE_SIZE_LIMIT } from '@/utils/constants'
 import { v4 as uuidv4 } from 'uuid'
 
+// File upload with drag/drop and processing
 export const useMediaUpload = () => {
   const dispatch = useAppDispatch()
   const [isDragging, setIsDragging] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
 
+   // Process uploaded file with metadata extraction
   const processFile = useCallback(async (file: File) => {
     const fileId = uuidv4()
     
@@ -28,12 +30,14 @@ export const useMediaUpload = () => {
       const url = URL.createObjectURL(file)
       let duration = 0
       let thumbnail: string | undefined
-
+      
+      // Extract duration for video/audio files
       if (fileType === 'video' || fileType === 'audio') {
         dispatch(setUploadProgress({ fileId, progress: 30 }))
         duration = await getMediaDuration(file)
       }
 
+       // Generate thumbnail for video files
       if (fileType === 'video') {
         dispatch(setUploadProgress({ fileId, progress: 60 }))
         thumbnail = await generateThumbnail(file)
@@ -58,6 +62,7 @@ export const useMediaUpload = () => {
       dispatch(addMediaFile(mediaFile))
       dispatch(setUploadProgress({ fileId, progress: 100 }))
 
+       // Clear progress after completion
       setTimeout(() => {
         dispatch(clearUploadProgress(fileId))
       }, 1000)
@@ -69,6 +74,7 @@ export const useMediaUpload = () => {
     }
   }, [dispatch])
 
+   // Handle file selection from input or drop
   const handleFileSelect = useCallback((files: FileList | File[]) => {
     setUploadError(null)
     const fileArray = Array.from(files)

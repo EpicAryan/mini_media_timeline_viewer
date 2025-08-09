@@ -9,6 +9,7 @@ interface ProgressEvent {
     time: number;
 }
 
+// FFmpeg integration for video/audio processing
 export const useFFmpeg = () => {
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ export const useFFmpeg = () => {
     const [error, setError] = useState<string | null>(null);
     const ffmpegRef = useRef<FFmpeg | null>(null);
 
+     // Initialize FFmpeg with WASM loading
     useEffect(() => {
         const loadFFmpeg = async () => {
             try {
@@ -58,6 +60,7 @@ export const useFFmpeg = () => {
         loadFFmpeg();
     }, []);
 
+     // Trim video with precise start/duration
     const trimVideo = useCallback(
         async (
             fileUrl: string,
@@ -76,6 +79,7 @@ export const useFFmpeg = () => {
                 const inputFile = await fetchFile(fileUrl);
                 await ffmpeg.writeFile("input.mp4", inputFile);
 
+                 // FFmpeg command arguments for video trimming
                 const args = [
                     "-i",
                     "input.mp4",
@@ -97,6 +101,7 @@ export const useFFmpeg = () => {
                 )) as Uint8Array;
                 const buffer = data.buffer;
 
+                  // Handle different buffer types for blob creation
                 if (buffer instanceof ArrayBuffer) {
                     const blob = new Blob([buffer], { type: "video/mp4" });
                     const url = URL.createObjectURL(blob);
@@ -126,6 +131,7 @@ export const useFFmpeg = () => {
         [ready]
     );
 
+     // Trim audio with codec copy for speed
     const trimAudio = useCallback(
         async (
             fileUrl: string,

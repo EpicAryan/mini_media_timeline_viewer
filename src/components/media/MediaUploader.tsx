@@ -12,6 +12,7 @@ import { setActiveMedia, togglePlayPause } from '@/store/slices/playerSlice'
 import { formatFileSize, formatTime } from '@/utils/mediaUtils'
 import { cn } from '@/utils/cn'
 
+// Media upload with drag/drop and file management
 export const MediaUploader = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { files, uploadProgress } = useAppSelector(state => state.media)
@@ -39,6 +40,7 @@ export const MediaUploader = () => {
     fileInputRef.current?.click()
   }
 
+   // Handle play/pause for media files
   const handlePlayVideo = (fileId: string) => {
     if (activeMediaId === fileId && isPlaying) {
       dispatch(togglePlayPause())
@@ -51,6 +53,7 @@ export const MediaUploader = () => {
     }
   }
 
+  // Delete file with event propagation stop
   const handleDeleteFile = (fileId: string, e: React.MouseEvent) => {
     e.stopPropagation()
     dispatch(removeMediaFile(fileId))
@@ -132,6 +135,7 @@ export const MediaUploader = () => {
                   }
                 </p>
                 
+                 {/* Supported file types indicator */}
                 <div className="inline-flex items-center gap-2 px-4 py-1 bg-surface/80 backdrop-blur-sm rounded-full text-[11px] text-gray-400 border border-border-primary mt-1">
                   <div className="flex items-center gap-1">
                     <div className="w-1.5 h-1.5 bg-media-video rounded-full" />
@@ -172,6 +176,7 @@ export const MediaUploader = () => {
                   size="sm"
                   onClick={() => setUploadError(null)}
                   className="text-error hover:bg-error/10 p-2 h-auto -mt-1"
+                  aria-label="Dismiss error"
                 >
                   <X size={16} />
                 </Button>
@@ -212,7 +217,7 @@ export const MediaUploader = () => {
                     >
                       <div className="">
                         <div className="flex items-center gap-5">
-                          {/* Fixed Thumbnail Display */}
+                          {/* Thumbnail with play overlay */}  
                           <div className="relative flex-shrink-0">
                             <div className="size-12 rounded-xl overflow-hidden relative">
                               {file.thumbnail ? (
@@ -298,6 +303,7 @@ export const MediaUploader = () => {
                                 size="sm"
                                 onClick={(e) => handleDeleteFile(file.id, e)}
                                 className="text-muted px-2 py-1 h-auto"
+                                aria-label={`Delete ${file.name}`}
                               >
                                 <Trash2 size={14} />
                               </Button>

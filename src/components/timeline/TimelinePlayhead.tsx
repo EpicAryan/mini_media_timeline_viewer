@@ -7,6 +7,7 @@ interface TimelinePlayheadProps {
   position: number
 }
 
+// Visual playhead indicator with position sync
 export const TimelinePlayhead = ({ position }: TimelinePlayheadProps) => {
   const { isPlaying } = useAppSelector(state => state.player)
 
@@ -14,6 +15,7 @@ export const TimelinePlayhead = ({ position }: TimelinePlayheadProps) => {
     <div
       className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-30 pointer-events-none"
       style={{ left: `${position}px` }}
+      aria-label="Playback position indicator"
     >
 
       <div className="absolute -top-1 -left-2 w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow-lg">

@@ -11,6 +11,7 @@ import {
   Download,
 } from 'lucide-react'
 
+// Main header with zoom and export controls
 export const Header = () => {
   const dispatch = useAppDispatch()
   const [showExportModal, setShowExportModal] = useState(false)
@@ -26,13 +27,14 @@ export const Header = () => {
           <h1 className="text-xl font-bold text-primary">Timeline Viewer</h1>
         </div>
 
-        {/* Center controls */}
+        {/* Timeline zoom controls */}
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => dispatch(zoomOut())}
             disabled={scale <= 10}
+            aria-label="Zoom out timeline"
           >
             <ZoomOut size={16} />
           </Button>
@@ -46,6 +48,7 @@ export const Header = () => {
             size="sm"
             onClick={() => dispatch(zoomIn())}
             disabled={scale >= 500}
+            aria-label="Zoom in timeline"
           >
             <ZoomIn size={16} />
           </Button>

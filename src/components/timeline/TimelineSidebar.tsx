@@ -14,11 +14,13 @@ interface TimelineSidebarProps {
   files: MediaFile[]
 }
 
+// Sidebar with track list for timeline navigation
 export const TimelineSidebar = ({ files }: TimelineSidebarProps) => {
   const dispatch = useAppDispatch()
   const { selectedFileId } = useAppSelector(state => state.media)
   const { activeMediaId } = useAppSelector(state => state.player)
 
+  // Handle file selection and activation
   const handleFileSelect = (fileId: string) => {
     dispatch(setSelectedFile(fileId))
     dispatch(setActiveMedia(fileId))
@@ -43,7 +45,7 @@ export const TimelineSidebar = ({ files }: TimelineSidebarProps) => {
         </p>
       </div>
       
-      {/* File List */}
+      {/* Scrollable file list */}
       <div className="flex-1 overflow-y-auto p-2 space-y-1">
         {files.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center p-8">
@@ -63,6 +65,7 @@ export const TimelineSidebar = ({ files }: TimelineSidebarProps) => {
                 activeMediaId === file.id && "bg-accent/5"
               )}
               onClick={() => handleFileSelect(file.id)}
+              aria-label={`Select track ${index + 1}: ${file.name}`}
             >
               {/* Track Number */}
               <div className="w-6 h-6 rounded bg-surface flex items-center justify-center flex-shrink-0">

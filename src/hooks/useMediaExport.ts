@@ -3,6 +3,7 @@ import { useAppSelector } from "@/store";
 import { useFFmpeg } from "./useFFmpeg";
 import { MediaFile } from "@/store/types";
 
+// Media export with FFmpeg integration
 export const useMediaExport = () => {
     const [isExporting, setIsExporting] = useState(false);
     const [exportProgress, setExportProgress] = useState(0);
@@ -17,6 +18,7 @@ export const useMediaExport = () => {
         trimAudio,
     } = useFFmpeg();
 
+    // Export image using canvas conversion
     const exportImage = useCallback(async (file: MediaFile) => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
@@ -48,6 +50,7 @@ export const useMediaExport = () => {
         });
     }, []);
 
+     // Export video with FFmpeg trimming
     const exportVideo = useCallback(
         async (file: MediaFile) => {
             if (!ffmpegReady) {
@@ -64,6 +67,7 @@ export const useMediaExport = () => {
                     trimmedDuration
                 );
 
+                  // Trigger download with trimmed filename
                 const a = document.createElement("a");
                 a.href = outputUrl;
                 a.download = `${file.name.replace(
@@ -82,6 +86,7 @@ export const useMediaExport = () => {
         [ffmpegReady, trimVideo]
     );
 
+    // Export audio with FFmpeg trimming
     const exportAudioFile = useCallback(
         async (file: MediaFile) => {
             if (!ffmpegReady) {
@@ -116,6 +121,7 @@ export const useMediaExport = () => {
         [ffmpegReady, trimAudio]
     );
 
+     // Main export handler with type detection
     const exportSelectedMedia = useCallback(async () => {
         if (!selectedFile) {
             setExportError("No media file selected");

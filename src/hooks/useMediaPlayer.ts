@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '@/store'
 import { setPlaying, setCurrentTime, setVolume } from '@/store/slices/playerSlice'
 import { setPlayheadPosition } from '@/store/slices/timelineSlice'
 
+// Media player controls with timeline sync
 export const useMediaPlayer = () => {
   const dispatch = useAppDispatch()
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -14,11 +15,13 @@ export const useMediaPlayer = () => {
   
   const activeFile = files.find(file => file.id === (activeMediaId || selectedFileId))
 
+  // Get current media element reference
   const getActiveElement = useCallback(() => {
     if (!activeFile) return null
     return activeFile.type === 'video' ? videoRef.current : audioRef.current
   }, [activeFile])
 
+  // Sync playhead position with current time
   useEffect(() => {
     if (activeFile && currentTime >= 0) {
       const playheadPos = (currentTime * scale)
@@ -26,6 +29,7 @@ export const useMediaPlayer = () => {
     }
   }, [currentTime, scale, activeFile, dispatch])
 
+  // Toggle play/pause with trim boundary check
   const togglePlayPause = useCallback(() => {
     const element = getActiveElement()
     if (!element || !activeFile) return
@@ -34,6 +38,7 @@ export const useMediaPlayer = () => {
       element.pause()
       dispatch(setPlaying(false))
     } else {
+      // Reset to trim start if outside boundaries
       if (currentTime < activeFile.trimStart || currentTime > activeFile.trimEnd) {
         element.currentTime = activeFile.trimStart
       }
@@ -43,6 +48,7 @@ export const useMediaPlayer = () => {
   }, [isPlaying, currentTime, activeFile, getActiveElement, dispatch])
 
 
+  // Seek within trim boundaries
   const seekTo = useCallback((time: number) => {
     const element = getActiveElement()
     if (!element || !activeFile) return
@@ -56,7 +62,7 @@ export const useMediaPlayer = () => {
     dispatch(setCurrentTime(clampedTime))
   }, [activeFile, getActiveElement, dispatch])
 
-
+ // Change volume with bounds checking
   const changeVolume = useCallback((newVolume: number) => {
     const element = getActiveElement()
     if (!element) return
@@ -66,7 +72,7 @@ export const useMediaPlayer = () => {
     dispatch(setVolume(clampedVolume))
   }, [getActiveElement, dispatch])
 
-
+// Handle time updates and trim boundary enforcement
   const handleTimeUpdate = useCallback(() => {
     const element = getActiveElement()
     if (!element || !activeFile) return
@@ -74,12 +80,14 @@ export const useMediaPlayer = () => {
     const time = element.currentTime
     dispatch(setCurrentTime(time))
 
+    // Auto-pause at trim end
     if (time >= activeFile.trimEnd) {
       element.pause()
       dispatch(setPlaying(false))
     }
   }, [activeFile, getActiveElement, dispatch])
 
+  // Setup media element event listeners
   useEffect(() => {
     const element = getActiveElement()
     if (!element) return

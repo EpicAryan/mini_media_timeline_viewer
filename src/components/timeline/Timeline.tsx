@@ -8,18 +8,21 @@ import { TimelinePlayhead } from './TimelinePlayhead'
 import { TimelineRuler } from './TimelineRuler'
 import { TimelineSidebar } from './TimelineSidebar'
 
+// Main timeline with tracks and playhead
 export const Timeline = () => {
   const dispatch = useAppDispatch()
   const timelineRef = useRef<HTMLDivElement>(null)
   const { files } = useAppSelector(state => state.media)
   const { scale, playheadPosition } = useAppSelector(state => state.timeline)
 
+  // Calculate timeline dimensions
   const maxDuration = files.reduce((max, file) => 
     Math.max(max, file.trimEnd), 30
   )
   const timelineWidth = Math.max(2000, maxDuration * scale)
 
 
+   // Auto-scroll to follow playhead
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     dispatch(setScrollPosition(e.currentTarget.scrollLeft))
   }

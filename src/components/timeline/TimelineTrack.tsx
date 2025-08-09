@@ -15,6 +15,7 @@ interface TimelineTrackProps {
   scale: number
 }
 
+// Individual timeline track with trim visualization
 export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
   const dispatch = useAppDispatch()
   const { selectedFileId } = useAppSelector(state => state.media)
@@ -24,6 +25,7 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
   const isActive = activeMediaId === file.id
   const isHighlighted = isSelected || isActive
 
+  // Calculate track dimensions based on scale
   const trimmedDuration = file.trimEnd - file.trimStart
   const blockWidth = Math.max(80, trimmedDuration * scale)
   const blockLeft = file.trimStart * scale
@@ -52,8 +54,10 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
 
   return (
     <div className="h-16 relative">
+      {/* Track center reference line */}
       <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 border-t border-border-primary/40 pointer-events-none" />
 
+      {/* Full duration background bar */}
       <div
         className={cn(
           'absolute top-1 bottom-1 rounded-md',
@@ -73,6 +77,8 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
         )}
         style={{ left: `${blockLeft}px`, width: `${blockWidth}px` }}
         onClick={handleClick}
+        role="button"
+        aria-label={`Select ${file.name} track`}
       >
         <div className="w-10 h-10 rounded overflow-hidden bg-black/20 flex-shrink-0">
           {file.thumbnail ? (
@@ -111,6 +117,7 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
         {isActive && <div className="w-3 h-3 bg-white rounded-full" />}
       </div>
 
+       {/* Dimmed overlay for left trimmed section */}
       {file.trimStart > 0 && (
         <div
           className="absolute top-1 bottom-1 bg-black/50 rounded-l-md pointer-events-none z-5"
@@ -119,6 +126,7 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
         />
       )}
 
+      {/* Dimmed overlay for right trimmed section */}
       {file.trimEnd < file.duration && (
         <div
           className="absolute top-1 bottom-1 bg-black/50 rounded-r-md pointer-events-none z-5"
@@ -130,6 +138,7 @@ export const TimelineTrack = ({ file, scale }: TimelineTrackProps) => {
         />
       )}
 
+      {/* Trim boundary indicators */}
       {(file.trimStart > 0 || file.trimEnd < file.duration) && (
         <>
           {file.trimStart > 0 && (

@@ -9,6 +9,7 @@ import { useMediaPlayer } from '@/hooks/useMediaPlayer'
 import { useAppSelector } from '@/store'
 import { formatTime } from '@/utils/mediaUtils'
 
+// Video/audio player with trim-aware controls
 export const MediaPlayer = () => {
   const { isPlaying, currentTime, volume } = useAppSelector(state => state.player)
   
@@ -21,6 +22,7 @@ export const MediaPlayer = () => {
     changeVolume,
   } = useMediaPlayer()
 
+  // Skip within trim boundaries
   const skipTime = (seconds: number) => {
     if (activeFile) {
       const newTime = Math.max(
@@ -43,13 +45,13 @@ export const MediaPlayer = () => {
         </div>
 
         {/* Empty State */}
-        <div className="flex-1 flex items-center justify-center !p-4">
+        <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center max-w-md">
             <div className="size-16 2xl:size-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-panel to-hover border-2 border-dashed border-border-primary flex items-center justify-center place-self-center">
               <Play size={36} className="text-muted" />
             </div>  
             <h3 className="text-base 2xl:text-2xl font-bold text-primary mb-4">Ready to Play</h3>
-            <p className="text-secondary text-base leading-relaxed !mb-6">
+            <p className="text-secondary text-base leading-relaxed mb-6">
               Upload some media files and select one from the library to start playing
             </p>
           </div>
@@ -74,6 +76,7 @@ export const MediaPlayer = () => {
         </div>
       </div>
 
+      {/* Media display area */}
       <div className="h-[55%] xl:h-[60%]">
         <div className="h-full mb-0 bg-black  overflow-hidden relative group">
           {activeFile.isProcessing ? (
@@ -119,12 +122,14 @@ export const MediaPlayer = () => {
             </div>
           )}
           
+          {/* Play button overlay for video */}
           {activeFile.type === 'video' && !isPlaying && (
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Button
                 variant="ghost"
                 className="size-16 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/20"
                 onClick={togglePlayPause}
+                aria-label="Play video"
               >
                 <Play size={24} className="text-white ml-1" />
               </Button>
@@ -171,7 +176,7 @@ export const MediaPlayer = () => {
             size="md"
             onClick={() => skipTime(-10)}
             disabled={activeFile.type === 'image'}
-            className="size-8 2xl:size-11 rounded-full hover:bg-hover p-2 2xl:p-3 cursor-pointer"
+            aria-label="Skip back 10 seconds"
           >
             <SkipBack size={20} />
           </Button>
@@ -191,6 +196,7 @@ export const MediaPlayer = () => {
             onClick={() => skipTime(10)}
             disabled={activeFile.type === 'image'}
             className="size-8 2xl:size-11 rounded-full hover:bg-hover p-2 2xl:p-3 cursor-pointer"
+            aria-label="Skip forward 10 seconds"
           >
             <SkipForward size={20} />
           </Button>
@@ -216,6 +222,7 @@ export const MediaPlayer = () => {
                   value={volume}
                   onChange={(e) => changeVolume(parseFloat(e.target.value))}
                   className="w-full h-2 bg-panel rounded-full appearance-none cursor-pointer slider"
+                  aria-label="Volume control"
                 />
               </div>
               

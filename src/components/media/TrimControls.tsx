@@ -7,7 +7,9 @@ import { Input } from '@/components/ui/Input'
 import { useAppSelector, useAppDispatch } from '@/store'
 import { updateTrimRange } from '@/store/slices/mediaSlice'
 import { formatTime } from '@/utils/mediaUtils'
+import { useSimpleKeyboard } from '@/hooks/useKeyboardShortcuts'
 
+// Precise trim controls with validation
 export const TrimControls = () => {
   const dispatch = useAppDispatch()
   const { files, selectedFileId } = useAppSelector(state => state.media)
@@ -18,7 +20,7 @@ export const TrimControls = () => {
   const [trimEnd, setTrimEnd] = useState('')
   const [errors, setErrors] = useState<{ start?: string; end?: string }>({})
 
-
+  // Sync form with selected file
   useEffect(() => {
     if (selectedFile) {
       setTrimStart(selectedFile.trimStart.toString())
@@ -31,6 +33,7 @@ export const TrimControls = () => {
     }
   }, [selectedFile])
 
+   // Validate trim range values
   const validateTrimValues = (startStr: string, endStr: string) => {
     const newErrors: { start?: string; end?: string } = {}
     
@@ -62,6 +65,7 @@ export const TrimControls = () => {
     return newErrors
   }
 
+  // Apply trim with validation
   const handleApplyTrim = () => {
     if (!selectedFile) return
     
@@ -77,6 +81,12 @@ export const TrimControls = () => {
     }
   }
 
+   // Enable Enter key to apply trim
+  useSimpleKeyboard({
+    onEnterPress: handleApplyTrim
+  })
+
+  // Reset to original duration
   const handleResetTrim = () => {
     if (!selectedFile) return
     
@@ -148,7 +158,7 @@ export const TrimControls = () => {
       <div>
         <h2 className="text-lg font-semibold text-primary mb-1">Trim Controls</h2>
         <p className="text-sm text-secondary">
-          Adjust the start and end times for your media
+          Use Tab to navigate, Enter to apply
         </p>
       </div>
 
@@ -181,6 +191,7 @@ export const TrimControls = () => {
           onChange={(e) => setTrimStart(e.target.value)}
           error={errors.start}
           placeholder="0"
+          tabIndex={1}
         />
         
         <Input
@@ -193,6 +204,7 @@ export const TrimControls = () => {
           onChange={(e) => setTrimEnd(e.target.value)}
           error={errors.end}
           placeholder={selectedFile.duration.toString()}
+          tabIndex={2}
         />
       </div>
 
@@ -203,6 +215,7 @@ export const TrimControls = () => {
           onClick={handleApplyTrim}
           disabled={!isValidTrim}
           className="w-full text-sm py-1 xl:py-2"
+          tabIndex={3}
         >
           <Scissors size={16} />
           Apply Trim
@@ -212,6 +225,7 @@ export const TrimControls = () => {
           variant="secondary"
           onClick={handleResetTrim}
           className="w-full text-sm py-1 xl:py-2"
+          tabIndex={4}
         >
           <RotateCcw size={16} />
           Reset to Original

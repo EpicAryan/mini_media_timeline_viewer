@@ -9,6 +9,7 @@ interface TimelineRulerProps {
   timelineWidth: number
 }
 
+// Time ruler with major and minor tick marks
 export const TimelineRuler = ({ maxDuration, scale, timelineWidth }: TimelineRulerProps) => {
   const seconds = Array.from({ length: maxDuration + 1 }, (_, i) => i)
   const minorFractions = [0.25, 0.5, 0.75]
@@ -16,7 +17,7 @@ export const TimelineRuler = ({ maxDuration, scale, timelineWidth }: TimelineRul
   return (
     <div className="h-12 bg-surface border-b border-primary flex-shrink-0 overflow-hidden relative">
       <div className="relative h-full" style={{ width: `${timelineWidth}px` }}>
-        {/* Major ticks */}
+        {/* Major tick marks with time labels */}
         <div className="absolute inset-0">
           {seconds.map((s) => {
             const x = Math.round(s * scale)
@@ -31,7 +32,7 @@ export const TimelineRuler = ({ maxDuration, scale, timelineWidth }: TimelineRul
           })}
         </div>
 
-        {/* Minor ticks */}
+        {/* Minor subdivision tick marks */}
         <div className="absolute inset-0">
           {seconds.slice(0, -1).map((s) =>
             minorFractions.map((f) => {
