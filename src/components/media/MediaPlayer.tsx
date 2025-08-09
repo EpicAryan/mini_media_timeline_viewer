@@ -36,7 +36,7 @@ export const MediaPlayer = () => {
       <div className="h-full flex flex-col bg-surface">
         {/* Header */}
         <div className="pb-2 border-b border-primary flex-shrink-0">
-          <h2 className="text-xl font-bold text-primary mb-2">Media Player</h2>
+          <h2 className="text-lg font-bold text-primary xl:mb-2">Media Player</h2>
           <p className="text-sm text-secondary">
             Select a file from the library to preview and control playback
           </p>
@@ -45,10 +45,10 @@ export const MediaPlayer = () => {
         {/* Empty State */}
         <div className="flex-1 flex items-center justify-center !p-4">
           <div className="text-center max-w-md">
-            <div className="size-24 mx-auto !mb-4 rounded-3xl bg-gradient-to-br from-panel to-hover border-2 border-dashed border-border-primary flex items-center justify-center place-self-center">
+            <div className="size-16 2xl:size-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-panel to-hover border-2 border-dashed border-border-primary flex items-center justify-center place-self-center">
               <Play size={36} className="text-muted" />
-            </div>
-            <h3 className="text-2xl font-bold text-primary !mb-4">Ready to Play</h3>
+            </div>  
+            <h3 className="text-base 2xl:text-2xl font-bold text-primary mb-4">Ready to Play</h3>
             <p className="text-secondary text-base leading-relaxed !mb-6">
               Upload some media files and select one from the library to start playing
             </p>
@@ -65,16 +65,16 @@ export const MediaPlayer = () => {
 
   return (
     <div className="h-full flex flex-col bg-surface">
-      <div className="pb-2 border-b border-primary flex-shrink-0 h-20">
+      <div className="pb-2 border-b border-primary flex-shrink-0 h-16">
         <div className="flex items-center justify-between h-full">
           <div className="min-w-0 flex-1 mr-4">
-            <h2 className="text-xl font-bold text-primary mb-1">Now Playing</h2>
+            <h2 className="text-lg font-bold text-primary mb-1">Now Playing</h2>
             <p className="text-sm text-secondary truncate">{activeFile.name}</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-shrink-0 h-[60%]">
+      <div className="h-[55%] xl:h-[60%]">
         <div className="h-full mb-0 bg-black  overflow-hidden relative group">
           {activeFile.isProcessing ? (
             <div className="h-full flex items-center justify-center">
@@ -95,7 +95,7 @@ export const MediaPlayer = () => {
             <div className="h-full flex items-center justify-center text-center p-8">
               <audio ref={audioRef} src={activeFile.url} />
               <div>
-                <div className="w-24 h-24 bg-gradient-to-br from-media-audio to-cyan-600 rounded-full flex items-center justify-center mb-4 shadow-2xl">
+                <div className="size-24 bg-gradient-to-br from-media-audio to-cyan-600 rounded-full flex items-center justify-center mb-4 shadow-2xl">
                   <Volume2 size={36} className="text-white" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-1 max-w-sm truncate">{activeFile.name}</h3>
@@ -123,7 +123,7 @@ export const MediaPlayer = () => {
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Button
                 variant="ghost"
-                className="w-16 h-16 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/20"
+                className="size-16 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/20"
                 onClick={togglePlayPause}
               >
                 <Play size={24} className="text-white ml-1" />
@@ -133,10 +133,10 @@ export const MediaPlayer = () => {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 px-6 py-4 2xl:space-y-2">
+      <div className="flex-1 min-h-0 px-2 xl:px-6 py-2 2xl:space-y-2">
         {/* Progress Bar */}
         {(activeFile.type === 'video' || activeFile.type === 'audio') && (
-          <div className="space-y-3">
+          <div className="space-y-2">
             <div
               className="group h-3 bg-panel rounded-full cursor-pointer relative overflow-hidden border border-primary hover:border-accent/50 transition-all duration-200 shadow-inner"
               onClick={(e) => {
@@ -157,7 +157,7 @@ export const MediaPlayer = () => {
               />
             </div>
             
-            <div className="flex justify-between text-sm text-secondary font-mono px-1">
+            <div className="flex justify-between text-xs xl:text-sm text-secondary font-mono px-1">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(activeFile.trimEnd)}</span>
             </div>
@@ -202,7 +202,7 @@ export const MediaPlayer = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => changeVolume(volume > 0 ? 0 : 1)}
-                className="w-10 h-10 rounded-full"
+                className="size-10 rounded-full"
               >
                 {volume > 0 ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </Button>

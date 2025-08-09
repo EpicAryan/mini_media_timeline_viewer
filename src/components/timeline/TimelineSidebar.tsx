@@ -34,7 +34,7 @@ export const TimelineSidebar = ({ files }: TimelineSidebarProps) => {
   }
 
   return (
-    <div className="w-80 bg-panel border-r border-primary flex-shrink-0 flex flex-col">
+    <div className="w-70 2xl:w-80 bg-panel border-r border-primary flex-shrink-0 flex flex-col">
       {/* Header */}
       <div className="p-2 flex items-center justify-around border-b border-primary">
         <h3 className="font-semibold text-primary mb-1">Timeline Tracks</h3>

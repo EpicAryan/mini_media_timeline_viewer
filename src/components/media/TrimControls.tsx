@@ -93,7 +93,7 @@ export const TrimControls = () => {
 
   if (!selectedFile) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 ">
         <div>
           <h2 className="text-lg font-semibold text-primary mb-2">Trim Controls</h2>
           <p className="text-sm text-secondary">
@@ -143,19 +143,19 @@ export const TrimControls = () => {
   const isValidTrim = currentDuration > 0 && Object.keys(errors).length === 0
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 mb-4">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-primary mb-2">Trim Controls</h2>
+        <h2 className="text-lg font-semibold text-primary mb-1">Trim Controls</h2>
         <p className="text-sm text-secondary">
           Adjust the start and end times for your media
         </p>
       </div>
 
       {/* File Info */}
-      <div className="bg-surface border border-primary rounded-lg p-4">
-        <h3 className="font-medium text-primary mb-3">{selectedFile.name}</h3>
-        <div className="space-y-2 text-sm">
+      <div className="bg-surface border border-primary rounded-lg px-3 py-2">
+        <h3 className="font-medium text-primary mb-1">{selectedFile.name}</h3>
+        <div className="space-y-1 text-sm">
           <div className="flex justify-between">
             <span className="text-secondary">Duration:</span>
             <span className="text-primary font-mono">{formatTime(selectedFile.duration)}</span>
@@ -202,7 +202,7 @@ export const TrimControls = () => {
           variant="primary"
           onClick={handleApplyTrim}
           disabled={!isValidTrim}
-          className="w-full"
+          className="w-full text-sm py-1 xl:py-2"
         >
           <Scissors size={16} />
           Apply Trim
@@ -211,7 +211,7 @@ export const TrimControls = () => {
         <Button
           variant="secondary"
           onClick={handleResetTrim}
-          className="w-full"
+          className="w-full text-sm py-1 xl:py-2"
         >
           <RotateCcw size={16} />
           Reset to Original
@@ -220,7 +220,7 @@ export const TrimControls = () => {
 
       {/* Trim Preview */}
       {isValidTrim && (
-        <div className="bg-surface border border-primary rounded-lg p-4">
+        <div className="bg-surface border border-primary rounded-lg px-3 py-2">
           <h4 className="text-sm font-medium text-primary mb-3">Trim Preview</h4>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">

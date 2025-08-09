@@ -14,7 +14,7 @@ export const MainLayout = () => {
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 flex flex-row overflow-hidden">
-          <div className="w-80 bg-panel border-r border-primary overflow-y-hidden px-1">
+          <div className="w-70 2xl:w-80 bg-panel border-r border-primary overflow-y-hidden px-1">
             <MediaUploader />
           </div>
 
@@ -22,12 +22,12 @@ export const MainLayout = () => {
             <MediaPlayer />
           </div>
 
-          <div className="w-80 bg-panel border-l border-primary overflow-y-hidden px-2">
+          <div className="w-70 2xl:w-80 bg-panel border-l border-primary overflow-y-auto px-2">
             <TrimControls />
           </div>
         </div>
 
-        <div className="h-60 bg-timeline border-t border-primary flex-shrink-0">
+        <div className="h-40 2xl:h-60 bg-timeline border-t border-primary ">
           <Timeline />
         </div>
       </div>

@@ -73,13 +73,13 @@ export const MediaUploader = () => {
     <div className="h-full flex flex-col bg-panel px-2">
       {/* Header */}
       <div className="border-b border-primary">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-bold text-primary ">Media Library</h2>
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="text-lg font-bold text-primary ">Media Library</h2>
           <div className="text-sm text-accent font-medium">
             {files.length} file{files.length !== 1 ? 's' : ''}
           </div>
         </div>
-        <p className="text-sm text-secondary leading-relaxed ">
+        <p className="text-sm text-secondary leading-snug ">
           Upload videos, audio files, and images to build your timeline
         </p>
       </div>
@@ -110,9 +110,9 @@ export const MediaUploader = () => {
             
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
-            <div className="relative p-2 text-center">
+            <div className="relative p-1 text-center">
               <div className="">
-                <div className="size-12 !mx-auto rounded-2xl flex items-center justify-center transition-all duration-200 shadow-lg !p-0">
+                <div className="size-10 mx-auto rounded-2xl flex items-center justify-center transition-all duration-200 shadow-lg !p-0">
                   <Upload size={24} className={cn(
                     "transition-colors duration-200",
                     isDragging ? "text-white" : "text-secondary group-hover:text-accent"
@@ -120,19 +120,19 @@ export const MediaUploader = () => {
                 </div>
               </div>
               
-              <div className="space-y-3">
-                <h3 className="text-xl font-bold text-primary">
+              <div className="space-y-1">
+                <h3 className="text-base font-bold text-primary">
                   {isDragging ? "Drop your files here" : "Upload Media Files"}
                 </h3>
                 
-                <p className="text-secondary max-w-sm mx-auto leading-relaxed">
+                <p className="text-xs text-secondary max-w-2xs mx-auto leading-snug">
                   {isDragging 
                     ? "Release to upload your media files" 
                     : "Drag and drop your files here, or click to browse"
                   }
                 </p>
                 
-                <div className="inline-flex items-center gap-3 !px-2 !py-2 bg-surface/80 backdrop-blur-sm rounded-full text-xs text-gray-400 border border-border-primary !mt-1">
+                <div className="inline-flex items-center gap-2 px-4 py-1 bg-surface/80 backdrop-blur-sm rounded-full text-[11px] text-gray-400 border border-border-primary mt-1">
                   <div className="flex items-center gap-1">
                     <div className="w-1.5 h-1.5 bg-media-video rounded-full" />
                     <span>MP4, WebM</span>
@@ -149,7 +149,7 @@ export const MediaUploader = () => {
                   </div>
                 </div>
                 
-                <p className="text-xs text-gray-400 !mt-2">
+                <p className="text-xs text-gray-400 mt-1">
                   Maximum file size: 100MB per file
                 </p>
               </div>
@@ -182,7 +182,7 @@ export const MediaUploader = () => {
           {files.length > 0 && (
             <div className="space-y-5 mb-2">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-primary">
+                <h3 className="text-base font-bold text-primary">
                   Your Files
                 </h3>
                 <p className="text-sm text-secondary">
@@ -190,7 +190,7 @@ export const MediaUploader = () => {
                 </p>
               </div>
               
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {files.map((file) => {
                   const progress = uploadProgress[file.id]
                   const isUploading = progress !== undefined && progress < 100
@@ -214,7 +214,7 @@ export const MediaUploader = () => {
                         <div className="flex items-center gap-5">
                           {/* Fixed Thumbnail Display */}
                           <div className="relative flex-shrink-0">
-                            <div className="w-18 h-18 rounded-xl overflow-hidden relative">
+                            <div className="size-12 rounded-xl overflow-hidden relative">
                               {file.thumbnail ? (
                                 <>
                                   <Image
@@ -227,8 +227,8 @@ export const MediaUploader = () => {
                                   />
                                   {canPlay && (
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center">
-                                      <div className="w-8 h-8 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                                        <Play size={14} className="text-black ml-0.5" />
+                                      <div className="w-6 h-6 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                                        <Play size={10} className="text-black ml-0.5" />
                                       </div>
                                     </div>
                                   )}
@@ -263,22 +263,22 @@ export const MediaUploader = () => {
                           </div>
                           
                           {/* File Info */}
-                          <div className="flex-1 min-w-0 space-y-2 py-2">
+                          <div className="flex-1 min-w-0 space-y-2 ">
                             <div className="flex items-start justify-between gap-3">
-                              <div className="min-w-0 space-y-1">
-                                <p className="text-base font-semibold text-primary truncate group-hover:text-accent transition-colors leading-tight">
+                              <div className="min-w-0 space-y-2">
+                                <p className="text-sm font-semibold text-primary truncate group-hover:text-accent transition-colors leading-tight">
                                   {file.name}
                                 </p>
                                 <div className="flex items-center gap-3">
                                   <span className={cn(
-                                    "text-[11px] px-2 py-[1px] rounded-full text-white font-medium shadow-sm",
+                                    "text-[10px] px-2 py-[1px] rounded-full text-white font-medium shadow-sm",
                                     file.type === 'video' && "bg-purple-600",
                                     file.type === 'audio' && "bg-cyan-600",
                                     file.type === 'image' && "bg-emerald-600"
                                   )}>
                                     {file.type.toUpperCase()}
                                   </span>
-                                  <div className="flex items-center gap-2 text-xs text-secondary">
+                                  <div className="flex items-center gap-2 text-nowrap text-[11px] text-secondary">
                                     <span className="font-medium">{formatFileSize(file.size)}</span>
                                     {file.duration > 0 && (
                                       <>
@@ -297,9 +297,9 @@ export const MediaUploader = () => {
                                 variant="ghost"
                                 size="sm"
                                 onClick={(e) => handleDeleteFile(file.id, e)}
-                                className="text-muted px-2 py-0 h-auto"
+                                className="text-muted px-2 py-1 h-auto"
                               >
-                                <Trash2 size={16} />
+                                <Trash2 size={14} />
                               </Button>
                             </div>
                             
@@ -330,12 +330,12 @@ export const MediaUploader = () => {
           
           {/* Empty State */}
           {files.length === 0 && !uploadError && (
-            <div className="text-center !py-12">
-              <div className="size-20 mx-auto !mb-4 rounded-2xl bg-gradient-to-br from-surface to-hover border-2 border-dashed border-border-primary flex items-center justify-center place-self-center">
-                <File size={32} className="text-muted" />
+            <div className="text-center py-12">
+              <div className="size-16 mx-auto !mb-4 rounded-2xl bg-gradient-to-br from-surface to-hover border-2 border-dashed border-border-primary flex items-center justify-center place-self-center">
+                <File size={28} className="text-muted" />
               </div>
-              <h3 className="text-lg font-semibold text-primary !mb-2">No files yet</h3>
-              <p className="text-secondary text-sm max-w-xs mx-auto leading-relaxed">
+              <h3 className="text-base font-semibold text-primary !mb-2">No files yet</h3>
+              <p className="text-secondary text-xs max-w-xs mx-auto leading-relaxed">
                 Upload your first media file to get started with your timeline
               </p>
             </div>
